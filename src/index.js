@@ -10,7 +10,6 @@ import { createTheme } from "@mui/material/styles";
 import { blue } from "@mui/material/colors";
 import { ThemeProvider } from "@mui/material";
 import rootReducer from "./Components/Reducers/rootReducer";
-import { BrowserRouter as Router } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
