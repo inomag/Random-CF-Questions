@@ -177,6 +177,7 @@ class ProblemsTable extends Component {
           search: false,
           toolbar: false,
           showTitle: false,
+          actionsColumnIndex: -1,
           headerStyle: {
             fontSize: "14px",
             fontWeight: "bold",
