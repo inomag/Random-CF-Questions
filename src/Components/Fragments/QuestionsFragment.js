@@ -70,8 +70,7 @@ export class QuestionsFragment extends Component {
                 data={this.state.currentData}
               />}
             
-            </div>
-            
+          </div>
     
           </Container>
         );
