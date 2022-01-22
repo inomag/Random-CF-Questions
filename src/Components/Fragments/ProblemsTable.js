@@ -142,7 +142,6 @@ class ProblemsTable extends Component {
         },
       ],
       data: props.data,
-      isLoading: true
     };
     }
     
@@ -207,7 +206,6 @@ class ProblemsTable extends Component {
             },
           },
         ]}
-        isLoading={this.state.isLoading}
       />
     );
   }
