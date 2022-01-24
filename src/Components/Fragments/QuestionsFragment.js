@@ -81,9 +81,7 @@ class QuestionsFragment extends Component {
               style={{
                 padding: "12px 4px",
                 height: "100%",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  marginLeft: "10px",
+                  margin: "10px",
                 borderRadius: "4px",
                   backgroundColor: "#ffffff",
                   position: "sticky",

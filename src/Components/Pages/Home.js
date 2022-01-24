@@ -6,6 +6,8 @@ import UserFragment from "../Fragments/UserFragment";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import Toolbar from '@material-ui/core/Toolbar';
+import { CssBaseline } from "@material-ui/core";
 
 import MuiListItem from '@material-ui/core/ListItem';
 import PersonIcon from '@material-ui/icons/Person';
@@ -21,7 +23,6 @@ const classes = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    
   },
   drawerPaper: {
     width: drawerWidth,
@@ -30,8 +31,10 @@ const classes = makeStyles((theme) => ({
   drawerContainer: {
     overflow: 'auto',
   },
+  toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
 }));
@@ -100,6 +103,7 @@ class Home extends Component {
   render() {
     return (
       <div className={classes.root}>
+        <CssBaseline />
       <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -145,11 +149,13 @@ class Home extends Component {
           </List>
         </div>
       </Drawer>
-        <div className={classes.content} style={{
-          marginLeft: '50px',
+        <main className={classes.content}
+          style={{
+          display: 'inline-flex',
         }}>
+          <Toolbar />
         {this.fragmentHandler()}
-      </div>
+      </main>
     </div>
     );
   }
