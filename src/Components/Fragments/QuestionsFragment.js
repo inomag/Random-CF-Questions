@@ -14,6 +14,7 @@ class QuestionsFragment extends Component {
       tagsCreated: false,
       progress: 0,
       error: this.props.error,
+      completed:this.props.completed? this.props.completed:[],
     };
   }
 
@@ -50,6 +51,11 @@ class QuestionsFragment extends Component {
         currentData: this.props.problems,
       });
     }
+    if (prevProps.completed !== this.props.completed) {
+      this.setState({
+        completed: this.props.completed,
+      });
+    }
   }
 
   render() {
@@ -74,7 +80,8 @@ class QuestionsFragment extends Component {
               }}
             >
               <ProblemsTable
-                data={this.state.currentData}
+                  data={this.state.currentData}
+                  completed={this.state.completed}
               />
             </div>
             <div
@@ -84,11 +91,12 @@ class QuestionsFragment extends Component {
                   margin: "10px",
                 borderRadius: "4px",
                   backgroundColor: "#ffffff",
-                  position: "sticky",
                 boxShadow: "1px 1px 2px #dddddd, -1px -1px 2px #dddddd",
               }}
             >
-              <FindQuestion data={this.state.currentData} />
+                <FindQuestion
+                  data={this.state.currentData}
+                completed={this.state.completed}/>
             </div>
           </div>
         )}

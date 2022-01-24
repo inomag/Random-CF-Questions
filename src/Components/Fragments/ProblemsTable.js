@@ -99,6 +99,7 @@ class ProblemsTable extends Component {
           field: "rating",
           type: "numeric",
           filterComponent: (props) => <CustomFilter {...props} />,
+          customSort: (a, b) => a.rating - b.rating,
           filterCellStyle: {
             textAlign: "center",
           },
@@ -142,7 +143,9 @@ class ProblemsTable extends Component {
         },
       ],
       data: props.data,
+      completed: this.props.completed ? this.props.completed : [],
     };
+    console.log(this.state.completed.length);
     }
     
     componentDidUpdate(prevProps) {
@@ -152,6 +155,12 @@ class ProblemsTable extends Component {
                 isLoading: false
             })
         }
+      if (prevProps.completed !== this.props.completed) {
+        this.setState({
+          completed: this.props.completed,
+        });
+        console.log(this.state.completed.length);
+      }
     }
 
     
@@ -184,6 +193,13 @@ class ProblemsTable extends Component {
             textTransform: "uppercase",
           },
           tableLayout: "auto",
+          rowStyle: (rowData) => { 
+            if (this.state.completed.includes(rowData.contestId+rowData.index)) {
+              return {
+                backgroundColor: "#caffbf",
+              };
+            }
+          }
         }}
         localization={{
           header: {

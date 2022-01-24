@@ -14,7 +14,7 @@ import PersonIcon from '@material-ui/icons/Person';
 
 import CodeIcon from '@material-ui/icons/Code';
 
-const drawerWidth = 150;
+const drawerWidth = 100;
 
 const classes = makeStyles((theme) => ({
   root: {
@@ -57,6 +57,8 @@ class Home extends Component {
       loading: true,
       error: false,
       fragment: "USER",
+      userData: [],
+      completed: [],
     };
   }
 
@@ -83,16 +85,47 @@ class Home extends Component {
     });
   };
 
+  fetchUserData = (username, onSuccess, onError) => {
+    fetch(`https://codeforces.com/api/user.status?handle=${username}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "FAILED") {
+          onError();
+        } else {
+          this.setState({
+            userData: data.result,
+          });
+          onSuccess(data.result);
+          this.getCompletedProblems();
+        }
+      }).catch((error) => { 
+        onError();
+      });
+  };
+
+  getCompletedProblems = () => { 
+    let completed = new Set();
+    this.state.userData.forEach((element) => {
+      if (element.verdict === "OK") {
+        completed.add(element.problem.contestId + element.problem.index);
+      }
+    });
+    this.setState({
+      completed: [...completed],
+    });
+  }
+
   fragmentHandler = () => {
     switch (this.state.fragment) {
       case "USER":
-        return <UserFragment />;
+        return <UserFragment fetchData={this.fetchUserData} userData={this.state.userData}/>;
       case "PROBLEMS":
         return (
           <QuestionsFragment
             problems={this.state.currentData}
             loading={this.state.loading}
             error={this.state.error}
+            completed={this.state.completed}
           />
         );
       default:
@@ -102,7 +135,11 @@ class Home extends Component {
 
   render() {
     return (
-      <div className={classes.root}>
+      <div className={classes.root}
+        style={{
+          height: '100vh',
+          maxWidth: '100%',
+      }}>
         <CssBaseline />
       <Drawer
           className={classes.drawer}
@@ -144,14 +181,14 @@ class Home extends Component {
                   {this.state.fragment==="PROBLEMS" ? <CodeIcon color="primary"/> : <CodeIcon style={{ color: 'white' }}/>}
               </IconButton>
               </ListItem>
-              
-
           </List>
         </div>
       </Drawer>
         <main className={classes.content}
           style={{
           display: 'inline-flex',
+            height: '100%',
+            width: '100%',
         }}>
           <Toolbar />
         {this.fragmentHandler()}

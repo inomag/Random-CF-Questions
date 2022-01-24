@@ -28,6 +28,7 @@ class FindQuestion extends Component {
         loading: false,
         title: props.data.length + " Questions Found",
       },
+      completed: this.props.completed,
     };
 
     // eslint-disable-next-line array-callback-return
@@ -103,8 +104,15 @@ class FindQuestion extends Component {
         });
     };
     
-    openRandomProblem = () => {
-        const problem = this.state.filteredData[Math.floor(Math.random() * this.state.filteredData.length)];
+  openRandomProblem = () => {
+    const leftProblems = this.state.filteredData.filter(
+      (problem) => !this.state.completed.includes(problem.contestId + problem.index)
+    );
+    if (leftProblems.length === 0) { 
+      alert("No more problems left in this filter!");
+      return;
+    }
+      const problem = leftProblems[Math.floor(Math.random() * this.state.filteredData.length)];
         window.open(
             "https://codeforces.com/problemset/problem/" +
             problem.contestId +
